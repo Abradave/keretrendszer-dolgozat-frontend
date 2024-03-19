@@ -1,27 +1,27 @@
 import PropTypes from "prop-types";
 
-function PublicTransport(props) {
-    const {mani} = props
+function TransportCard(props) {
+    const {vehicle} = props
     return (     
     <div className="col">
         <div className="card">
             <div className="card-header">
-                {mani.model}
+                {vehicle.model}
             </div>
             <div className="card-body">
                 <table className="table">
                     <tbody>
                         <tr>
                             <th>Model</th>
-                            <td>{mani.model}</td>
+                            <td>{vehicle.model}</td>
                         </tr>
                         <tr>
                             <th>Year</th>
-                            <td>{mani.year_made}</td>
+                            <td>{vehicle.year_made}</td>
                         </tr>
                         <tr>
                             <th>Capacity</th>
-                            <td>{mani.capacity}</td>
+                            <td>{vehicle.capacity}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -31,8 +31,8 @@ function PublicTransport(props) {
     )    
 }
 
-transportCard.propTypes = {
-    type: PropTypes.object.isRequired
+TransportCard.propTypes = {
+    vehicle: PropTypes.object.isRequired
 }
 
-export default PublicTransport;
+export default TransportCard;
