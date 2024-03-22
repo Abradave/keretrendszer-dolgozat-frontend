@@ -6,7 +6,7 @@ function TransportCard(props) {
     <div className="col">
         <div className="card">
             <div className="card-header">
-                {vehicle.model}
+                {vehicle.id}
             </div>
             <div className="card-body">
                 <table className="table">

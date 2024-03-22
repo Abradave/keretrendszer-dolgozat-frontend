@@ -2,18 +2,18 @@ import { useRef } from "react";
 import PropTypes from "prop-types";
 
 function TransportForm(props){
-    const modelRef = useRef(null);
-    const yearRef = useRef(null);
-    const capacityRef = useRef(null);
-    const {onSubmit} = props;
+    const modelRef = useRef(null)
+    const yearRef = useRef(null)
+    const capacityRef = useRef(null)
+    const {onSubmit} = props
 
-    const createVehicle =() => {
+    const createVehicle = () => {
         const vehicle = {
             model: modelRef.current.value,
             year_made: yearRef.current.value,
             capacity: capacityRef.current.value,
         };
-        onSubmit(vehicle);
+        onSubmit(vehicle)
     }
     return (<form onSubmit={event => {event.preventDefault(); createVehicle();}}>
         <div  className="mb-3">

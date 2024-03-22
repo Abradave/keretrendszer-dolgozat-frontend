@@ -8,7 +8,7 @@ import TransportForm from './components/TransportForm';
 
 function App() {
   const backend_url="http://localhost:8000/api/public_transports";
-  const [vehicle, setVehicle] = useState([]);
+  const [vehicles, setVehicle] = useState([]);
   useEffect(() => {
     readVehicle();
   }, []);
@@ -19,7 +19,7 @@ function App() {
     setVehicle(data);
   }
 
-  const createVehicle = async () => {
+  const createVehicle = async (vehicle) => {
     const response = await fetch(backend_url, {
       method: "POST",
       body: JSON.stringify(vehicle),
@@ -44,7 +44,7 @@ function App() {
     <section>
       <h2>Vehicles list:</h2>
     <div className='row row-cols-lg-2 row-cols-1'>
-      {vehicle.map(vehicle => <TransportCard vehicle={vehicle} key={vehicle.id}/>)}
+      {vehicles.map(vehicle => <TransportCard vehicle={vehicle} key={vehicle.id}/>)}
     </div>
     </section>
   </main>);
