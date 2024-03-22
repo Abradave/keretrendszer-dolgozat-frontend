@@ -4,7 +4,7 @@ function TransportCard(props) {
     const {vehicle} = props
     return (     
     <div className="col">
-        <div className="card">
+        <div className="card h-100">
             <div className="card-header">
                 {vehicle.id}
             </div>

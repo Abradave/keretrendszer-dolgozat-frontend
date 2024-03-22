@@ -31,8 +31,10 @@ function App() {
     const data = await response.json();
     if (response.ok) {
       readVehicle();
+      return true;
     } else {
       alert(data.message);
+      return false;
     }
   }
 
@@ -43,7 +45,7 @@ function App() {
     </section>
     <section>
       <h2>Vehicles list:</h2>
-    <div className='row row-cols-lg-2 row-cols-1'>
+    <div className='row row-cols-lg-2 row-cols-1 gy-3'>
       {vehicles.map(vehicle => <TransportCard vehicle={vehicle} key={vehicle.id}/>)}
     </div>
     </section>

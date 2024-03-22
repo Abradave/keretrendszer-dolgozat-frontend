@@ -7,14 +7,24 @@ function TransportForm(props){
     const capacityRef = useRef(null)
     const {onSubmit} = props
 
-    const createVehicle = () => {
+    const createVehicle = async () => {
         const vehicle = {
             model: modelRef.current.value,
             year_made: yearRef.current.value,
             capacity: capacityRef.current.value,
         };
-        onSubmit(vehicle)
+        const success = await onSubmit(vehicle)
+        if (success) {
+            resetForm();
+        }
     }
+
+    const resetForm = () => {
+        modelRef.current.value = "";
+        yearRef.current.value = "";
+        capacityRef.current.value = "";
+    }
+
     return (<form onSubmit={event => {event.preventDefault(); createVehicle();}}>
         <div  className="mb-3">
             <label htmlFor="model" className="form-label">Model</label>
