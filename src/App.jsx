@@ -9,6 +9,8 @@ import TransportForm from './components/TransportForm';
 function App() {
   const backend_url="http://localhost:8000/api/public_transports";
   const [vehicles, setVehicle] = useState([]);
+  const [updateId, setUpdateID] = useState(0);
+  const [updateVehicleData, setUpdateVehicleData] = useState(null);
   useEffect(() => {
     readVehicle();
   }, []);
@@ -54,13 +56,70 @@ function App() {
   }
 
   const loadEditForm = async (id) => {
-    return id;
+    setUpdateID(id);
   }
+
+  const readSingleVehicle = async () => {
+    const response = await fetch(`${backend_url}/${updateId}`, {
+      headers : {
+        Accept : "application/json"
+      }
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setUpdateVehicleData(data);
+    }
+    else {
+      setUpdateVehicleData(null);
+      alert(data.message);
+    }
+  }
+
+  const updateVehicle = async (vehicle) => {
+    const response = await fetch(`${backend_url}/${updateId}`,{
+      method : "PATCH",
+      body : JSON.stringify(vehicle),
+      headers:{
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
+    const data = await response.json();
+    if (response.ok) {
+      readVehicle();
+      setUpdateID(0);
+      return true;
+    }
+    else {
+      alert(data.message);
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    if (updateId == 0) {
+      setUpdateVehicleData(null);
+    }
+    else {
+      readSingleVehicle();
+    }
+    readSingleVehicle(updateId);
+  }, [updateId]);
 
   return (<main className='container'>
     <section>
-      <h2>New Vehicle</h2>
-      <TransportForm onSubmit={createVehicle}/>
+    {
+      updateVehicleData == null ?
+      <>
+        <h2>New Vehicle</h2>
+        <TransportForm onSubmit={createVehicle}/>
+      </>
+      :
+      <>
+        <h2>{updateVehicleData.id} data edit</h2>
+        <TransportForm onSubmit={updateVehicle} buttonText={"Update"} vehicle={updateVehicleData}/>
+      </>
+    }
     </section>
     <section>
       <h2>Vehicles list:</h2>

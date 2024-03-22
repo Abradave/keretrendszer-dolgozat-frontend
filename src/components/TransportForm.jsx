@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 function TransportForm(props){
     const modelRef = useRef(null)
     const yearRef = useRef(null)
     const capacityRef = useRef(null)
-    const {onSubmit} = props
+    const {onSubmit, buttonText, vehicle} = props
 
     const createVehicle = async () => {
         const vehicle = {
@@ -25,6 +25,14 @@ function TransportForm(props){
         capacityRef.current.value = "";
     }
 
+    useEffect(() => {
+        if (vehicle) {
+            modelRef.current.value = vehicle.model;
+            yearRef.current.value = vehicle.year_made;
+            capacityRef.current.value = vehicle.capacity;
+        }
+      }, [vehicle]);
+
     return (<form onSubmit={event => {event.preventDefault(); createVehicle();}}>
         <div  className="mb-3">
             <label htmlFor="model" className="form-label">Model</label>
@@ -38,12 +46,19 @@ function TransportForm(props){
             <label htmlFor="capacity" className="form-label">Capayity</label>
             <input type="number" className="form-control" id="capacity" placeholder="Capacity" ref={capacityRef}/>
         </div>
-        <button type="submit" className="btn btn-success">Submit</button>
+        <button type="submit" className="btn btn-success">{buttonText}</button>
     </form>);
 }
 
 TransportForm.propTypes ={
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    buttonText: PropTypes.string,
+    vehicle: PropTypes.object
+}
+
+TransportForm.defaultProps = {
+    buttonText : "Add",
+    vehicle : null
 }
 
 export default TransportForm;
