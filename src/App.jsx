@@ -38,6 +38,25 @@ function App() {
     }
   }
 
+  const deleteVehicle = async (id) => {
+    const response = await fetch(`${backend_url}/${id}`, {
+      method : "DELETE",
+      headers : {
+        Accept : "application/json"
+      }
+    });
+    if (response.ok) {
+      readVehicle();
+    } else {
+      const data = await response.json();
+      alert(data.message);
+    }
+  }
+
+  const loadEditForm = async (id) => {
+    return id;
+  }
+
   return (<main className='container'>
     <section>
       <h2>New Vehicle</h2>
@@ -46,7 +65,7 @@ function App() {
     <section>
       <h2>Vehicles list:</h2>
     <div className='row row-cols-lg-2 row-cols-1 gy-3'>
-      {vehicles.map(vehicle => <TransportCard vehicle={vehicle} key={vehicle.id}/>)}
+      {vehicles.map(vehicle => <TransportCard vehicle={vehicle} key={vehicle.id} editClick = {loadEditForm} deleteClick={deleteVehicle}/>)}
     </div>
     </section>
   </main>);
